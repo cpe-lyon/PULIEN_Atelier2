@@ -1,11 +1,15 @@
 package org.pulien.cardmanager.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
+import org.pulien.cardmanager.models.enums.Rarities;
 
 @Entity
 @Table(name = "cards")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,14 +22,8 @@ public class Card {
     private String image;
     @Column(name = "type")
     private String type;
-
-    public Card() {}
-
-    public Card(Long id, String name, int pv, String image, String type) {
-        this.id = id;
-        this.name = name;
-        this.pv = pv;
-        this.image = image;
-        this.type = type;
-    }
+    @Column(name = "price")
+    private int price;
+    @Column(name = "rarity")
+    private Rarities rarity;
 }
