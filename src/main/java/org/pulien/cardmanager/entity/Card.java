@@ -13,17 +13,24 @@ import org.pulien.cardmanager.models.enums.Rarities;
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "card_id")
+    private Long cardId;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "pv")
     private int pv;
+
     @Column(name = "image")
     private String image;
+
     @Column(name = "type")
     private String type;
+
     @Column(name = "price")
     private int price;
+
     @Column(name = "rarity")
     private Rarities rarity;
 }

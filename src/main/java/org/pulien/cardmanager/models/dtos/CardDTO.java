@@ -16,11 +16,11 @@ public class CardDTO implements Dto<Card> {
     private String image;
     private String type;
     private int price;
-    private Rarities rarity;
+    private String rarity;
 
 
     @Override
     public Card toEntity() {
-        return new Card(this.id, this.name, this.pv, this.image, this.type, this.price, this.rarity);
+        return new Card(this.id, this.name, this.pv, this.image, this.type, this.price, Rarities.valueOf(this.rarity.toUpperCase())) ;
     }
 }
