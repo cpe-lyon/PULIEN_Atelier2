@@ -2,7 +2,6 @@ package org.pulien.cardmanager.controller.cards;
 
 import lombok.NonNull;
 import org.pulien.cardmanager.entity.Card;
-import org.pulien.cardmanager.models.dtos.CardDTO;
 import org.pulien.cardmanager.service.CardsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,23 +40,23 @@ public class CardsController {
         return this.cardsService.getCardsMoreExpensiveThan(mini);
     }
 
-    @GetMapping("/filter/rarity/{rarity}")
+    /*@GetMapping("/filter/rarity/{rarity}")
     public ResponseEntity<List<Card>> getCardsMoreExpensiveThan(@PathVariable String rarity) {
         return this.cardsService.getCardsMoreExpensiveThan(rarity);
-    }
+    }*/
 
     @GetMapping("/filter/name/{name}")
     public ResponseEntity<List<Card>> getCardFromName(@PathVariable String name) {
         return this.cardsService.getCardFromName(name);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Card> updateCardFromId(@RequestBody CardDTO newValue) {
+/*    @PutMapping("/update")
+    public ResponseEntity<Card> updateCardFromId(@RequestBody  newValue) {
         return this.cardsService.updateCardFromId(newValue);
     }
 
     @PostMapping("/insert")
     public ResponseEntity<Card> insertCard(@RequestBody CardDTO newValue) {
         return this.cardsService.insertCard(newValue);
-    }
+    }*/
 }
