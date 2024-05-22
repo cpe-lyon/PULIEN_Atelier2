@@ -3,6 +3,8 @@ package org.pulien.cardmanager.repository.card;
 import org.pulien.cardmanager.entity.Card;
 import org.pulien.cardmanager.entity.CardInstance;
 import org.pulien.cardmanager.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +20,7 @@ public interface CardInstancesRepository extends JpaRepository<CardInstance, Lon
 
     @Query("SELECT ci FROM CardInstance ci WHERE ci.user.login = :login")
     List<CardInstance> findCardInstanceByUserLogin(String login);
+
+    @Query("SELECT ci FROM CardInstance ci WHERE ci.isBuyable = true")
+    Page<CardInstance> findByBuyableIsTrue(Pageable pageable);
 }
