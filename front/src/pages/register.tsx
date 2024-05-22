@@ -54,7 +54,7 @@ const registerForm = () => {
                         <FormItem>
                             <FormLabel>Firstname</FormLabel>
                             <FormControl>
-                                <Input placeholder="Firstname" {...field} />
+                                <Input placeholder="Firstname" {...field} className={"w-1/5"} />
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -67,7 +67,7 @@ const registerForm = () => {
                         <FormItem>
                             <FormLabel>Lastname</FormLabel>
                             <FormControl>
-                                <Input placeholder="Lastname" {...field} />
+                                <Input placeholder="Lastname" {...field} className={"w-1/5"}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -80,7 +80,7 @@ const registerForm = () => {
                         <FormItem>
                             <FormLabel>Login</FormLabel>
                             <FormControl>
-                                <Input placeholder="Login" {...field} />
+                                <Input placeholder="Login" {...field} className={"w-1/5"}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -93,7 +93,7 @@ const registerForm = () => {
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input placeholder="Email" {...field} />
+                                <Input placeholder="Email" {...field} className={"w-1/4"}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -106,7 +106,7 @@ const registerForm = () => {
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input placeholder="Password" {...field} />
+                                <Input placeholder="Password" {...field} className={"w-1/5"}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
