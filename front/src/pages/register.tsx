@@ -14,17 +14,20 @@ import {
 import { Input } from "@/components/ui/input"
 
 const formSchema = z.object({
-    name: z.string().min(2,{
-        message: "Name need to contain at least two characters",
+    firstname: z.string().min(2,{
+        message: "Firstname need to contain at least 2 characters",
     }),
-    surname: z.string().min(0,{
-        message: "Surname need to contain at least two characters",
+    lastname: z.string().min(2,{
+        message: "Lastname need to contain at least 2 characters",
+    }),
+    login: z.string().min(6,{
+        message: "Login need to contain at least 6 characters",
+    }),
+    email: z.string().min(5,{
+        message: "Email need to contain at least 5 characters",
     }),
     password: z.string().min(6,{
-        message: "Password need to contain at least six characters",
-    }),
-    repassword: z.string().min(6,{
-        message: "Password need to contain at least six characters",
+        message: "Password need to contain at least 6 characters",
     }),
 })
 
@@ -46,12 +49,12 @@ const registerForm = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <FormField
                     control={form.control}
-                    name="name"
+                    name="firstname"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel>Name</FormLabel>
+                            <FormLabel>Firstname</FormLabel>
                             <FormControl>
-                                <Input placeholder="Name" {...field} />
+                                <Input placeholder="Firstname" {...field} />
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -59,12 +62,38 @@ const registerForm = () => {
                 />
                 <FormField
                     control={form.control}
-                    name="surname"
+                    name="lastname"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel>Surname</FormLabel>
+                            <FormLabel>Lastname</FormLabel>
                             <FormControl>
-                                <Input placeholder="Surname" {...field} />
+                                <Input placeholder="Lastname" {...field} />
+                            </FormControl>
+                            <FormMessage/>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="login"
+                    render={({field}) => (
+                        <FormItem>
+                            <FormLabel>Login</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Login" {...field} />
+                            </FormControl>
+                            <FormMessage/>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="email"
+                    render={({field}) => (
+                        <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                                <Input placeholder="Email" {...field} />
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -78,19 +107,6 @@ const registerForm = () => {
                             <FormLabel>Password</FormLabel>
                             <FormControl>
                                 <Input placeholder="Password" {...field} />
-                            </FormControl>
-                            <FormMessage/>
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    control={form.control}
-                    name="repassword"
-                    render={({field}) => (
-                        <FormItem>
-                            <FormLabel>Password</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Repeat your password !" {...field} />
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
