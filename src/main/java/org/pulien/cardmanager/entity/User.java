@@ -31,4 +31,7 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "cash")
+    private int cash;
 }

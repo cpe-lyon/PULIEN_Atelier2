@@ -9,6 +9,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +27,12 @@ public class Card {
 
     @Column(name = "pace")
     private int pace;
+
+    @Column(name = "weight")
+    private int weight;
+
+    @Column(name = "height")
+    private int height;
 
     @Column(name = "price")
     private int price;
