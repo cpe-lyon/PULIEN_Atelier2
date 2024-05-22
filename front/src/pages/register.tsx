@@ -31,7 +31,7 @@ const formSchema = z.object({
     }),
 })
 
-const registerForm = () => {
+const Register = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -118,4 +118,4 @@ const registerForm = () => {
     )
 }
 
-export default registerForm;
+export default Register;
