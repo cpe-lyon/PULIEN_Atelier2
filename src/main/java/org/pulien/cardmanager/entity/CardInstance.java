@@ -2,14 +2,16 @@ package org.pulien.cardmanager.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "card_instances")
+@Table(name = "card_instances", schema = "pulien")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class CardInstance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

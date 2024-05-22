@@ -5,7 +5,7 @@ import lombok.*;
 import org.pulien.cardmanager.models.enums.Rarities;
 
 @Entity
-@Table(name = "cards")
+@Table(name = "cards", schema = "pulien")
 @Getter
 @Setter
 @NoArgsConstructor

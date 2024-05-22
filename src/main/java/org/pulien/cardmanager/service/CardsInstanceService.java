@@ -1,21 +1,26 @@
 package org.pulien.cardmanager.service;
 
+import jakarta.annotation.Nullable;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.pulien.cardmanager.entity.Card;
 import org.pulien.cardmanager.entity.CardInstance;
+import org.pulien.cardmanager.entity.User;
+import org.pulien.cardmanager.repository.UserRepository;
 import org.pulien.cardmanager.repository.card.CardInstancesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-@NoArgsConstructor
+@AllArgsConstructor
 public class CardsInstanceService {
-    @Autowired
-    private CardInstancesRepository cardInstancesRepository;
+    private final CardInstancesRepository cardInstancesRepository;
 
     public List<Card> getCardsByUserId(Long userId) {
         return cardInstancesRepository.findCardsByUserId(userId);
@@ -45,5 +50,41 @@ public class CardsInstanceService {
 
     public Optional<CardInstance> getCardInstanceById(Long id) {
         return this.cardInstancesRepository.findById(id);
+    }
+
+    public CardInstance createCardInstance(Card card, User user, @Nullable String nickname) throws BadRequestException {
+        CardInstance cardInstanceToSave = CardInstance.builder()
+                .card(card)
+                .user(user)
+                .nickname(nickname)
+                .build();
+
+        CardInstance savedCardInstance = cardInstancesRepository.save(cardInstanceToSave);
+        if (savedCardInstance == null){
+            throw new BadRequestException("Error while saving card instance.");
+        }
+
+        return savedCardInstance;
+    }
+
+    public List<CardInstance> createCardInstance(List<Card> cards, User user) throws BadRequestException {
+        List<CardInstance> cardInstances = cards.stream().map(card ->{
+            return CardInstance.builder()
+                    .card(card)
+                    .user(user)
+                    .build();
+        }).toList();
+
+
+        List<CardInstance> savedCardInstance = cardInstancesRepository.saveAll(cardInstances);
+        if (savedCardInstance.isEmpty()){
+            throw new BadRequestException("Error while saving card instances.");
+        }
+
+        return savedCardInstance;
+    }
+
+    public List<CardInstance> getCardsByUserLogin(String username) {
+        return cardInstancesRepository.findCardInstanceByUserLogin(username);
     }
 }

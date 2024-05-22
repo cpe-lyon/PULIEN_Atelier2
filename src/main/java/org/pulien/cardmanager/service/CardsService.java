@@ -2,6 +2,7 @@ package org.pulien.cardmanager.service;
 
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.apache.coyote.BadRequestException;
 import org.pulien.cardmanager.entity.Card;
 import org.pulien.cardmanager.models.dtos.CardDTO;
 import org.pulien.cardmanager.models.enums.EnumConverters;
@@ -12,8 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -27,6 +30,10 @@ public class CardsService {
 
     public ResponseEntity<List<Card>> getCards() {
         return ResponseEntity.ok(cardsRepository.findAll());
+    }
+
+    public List<Card> getAllCards() {
+        return cardsRepository.findAll();
     }
 
     public ResponseEntity<Card> getCardById(@NonNull @PathVariable Long id) {
@@ -86,5 +93,14 @@ public class CardsService {
     public ResponseEntity<Card> insertCard(@RequestBody CardDTO newValue) {
         Optional<Card> saved = Optional.of(this.cardsRepository.save(newValue.toEntity()));
         return saved.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
+    }
+
+    public Card getRandomCard() throws BadRequestException {
+        List<Card> allCards = getAllCards();
+        if (allCards.isEmpty()){
+            throw new BadRequestException("There is no card.");
+        }
+        int idx = new Random().nextInt(allCards.size());
+        return allCards.get(idx);
     }
 }

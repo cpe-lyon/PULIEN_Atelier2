@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/cards")
+@RequestMapping("/api/v1/cards")
 public class CardsController {
     @Autowired
     private CardsService cardsService;
@@ -56,7 +56,7 @@ public class CardsController {
         return this.cardsService.updateCardFromId(newValue);
     }
 
-    @PostMapping("/post")
+    @PostMapping("/insert")
     public ResponseEntity<Card> insertCard(@RequestBody CardDTO newValue) {
         return this.cardsService.insertCard(newValue);
     }

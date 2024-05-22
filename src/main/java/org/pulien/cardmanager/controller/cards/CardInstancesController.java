@@ -1,16 +1,18 @@
 package org.pulien.cardmanager.controller.cards;
 
+import org.apache.coyote.BadRequestException;
 import org.pulien.cardmanager.entity.Card;
 import org.pulien.cardmanager.entity.CardInstance;
 import org.pulien.cardmanager.service.CardsInstanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/cardsInstances")
+@RequestMapping("/api/v1/cardsInstances")
 public class CardInstancesController {
     @Autowired
     private CardsInstanceService cardInstanceService;
@@ -33,6 +35,11 @@ public class CardInstancesController {
     @GetMapping("/user/{userId}/cards")
     public List<Card> getCardsByUserId(@PathVariable Long userId) {
         return cardInstanceService.getCardsByUserId(userId);
+    }
+
+    @GetMapping("/currentuser")
+    public ResponseEntity<List<CardInstance>> getCurrentUserCards(@RequestAttribute String username) {
+        return ResponseEntity.ok(cardInstanceService.getCardsByUserLogin(username));
     }
 
     @PostMapping
