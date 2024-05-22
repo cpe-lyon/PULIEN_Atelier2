@@ -92,4 +92,8 @@ public class CardsService {
         int idx = new Random().nextInt(allCards.size());
         return allCards.get(idx);
     }
+
+    public void register(Card card) {
+        cardsRepository.save(card);
+    }
 }
