@@ -41,6 +41,7 @@ public class AuthService {
                 .lastname(request.getLastname())
                 .login(request.getLogin())
                 .password(request.getPassword())
+                .cash(1000000)
                 .build();
 
         User savedUser = userService.register(user);

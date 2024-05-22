@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/auth")
@@ -34,6 +38,12 @@ public class AuthController {
     @PostMapping("/checktoken")
     public ResponseEntity<Boolean> checkToken(@RequestBody CheckTokenRequest checkTokenRequest) {
         return ResponseEntity.ok(authService.checkToken(checkTokenRequest));
+    }
+
+    @PostMapping("/zd")
+    public ResponseEntity<Boolean> checkToken() {
+
+        return ResponseEntity.ok(true);
     }
 }
 
