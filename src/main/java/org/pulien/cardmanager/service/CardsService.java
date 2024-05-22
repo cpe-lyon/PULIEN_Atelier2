@@ -5,7 +5,6 @@ import lombok.NonNull;
 import org.apache.coyote.BadRequestException;
 import org.pulien.cardmanager.entity.Card;
 import org.pulien.cardmanager.models.dtos.CardDTO;
-import org.pulien.cardmanager.models.enums.EnumConverters;
 import org.pulien.cardmanager.repository.card.CardsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;

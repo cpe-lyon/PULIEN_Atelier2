@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.pulien.cardmanager.entity.Card;
-import org.pulien.cardmanager.models.enums.Rarities;
 
 @Getter
 @Setter
@@ -16,7 +15,7 @@ public class CardDTO implements Dto<Card> {
     private String image;
     private String type;
     private int price;
-    private String rarity;
+    private int rating;
 
 
     @Override
