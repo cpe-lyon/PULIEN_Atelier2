@@ -1,6 +1,7 @@
 package org.pulien.cardmanager.controller;
 
 import lombok.AllArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.pulien.cardmanager.exception.LoginException;
 import org.pulien.cardmanager.exception.PasswordException;
 import org.pulien.cardmanager.exception.RegistrationException;
@@ -26,7 +27,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody RegistrationRequest registrationRequest) throws RegistrationException {
+    public ResponseEntity<String> register(@RequestBody RegistrationRequest registrationRequest) throws RegistrationException, BadRequestException {
         return ResponseEntity.ok(authService.register(registrationRequest));
     }
 

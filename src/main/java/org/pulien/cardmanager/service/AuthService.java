@@ -1,8 +1,8 @@
 package org.pulien.cardmanager.service;
 
 import lombok.AllArgsConstructor;
+import org.apache.coyote.BadRequestException;
 import org.pulien.cardmanager.authentification.JwtUtil;
-import org.pulien.cardmanager.entity.UserBuilder;
 import org.pulien.cardmanager.exception.PasswordException;
 import org.pulien.cardmanager.request.AuthRequest;
 import org.pulien.cardmanager.request.CheckTokenRequest;
@@ -34,13 +34,13 @@ public class AuthService {
         }
     }
 
-    public String register(RegistrationRequest request) throws RegistrationException{
-        User user = new UserBuilder()
-                .setEmail(request.getEmail())
-                .setFirstname(request.getFirstname())
-                .setLastname(request.getLastname())
-                .setLogin(request.getLogin())
-                .setPassword(request.getPassword())
+    public String register(RegistrationRequest request) throws RegistrationException, BadRequestException {
+        User user = User.builder()
+                .email(request.getEmail())
+                .firstname(request.getFirstname())
+                .lastname(request.getLastname())
+                .login(request.getLogin())
+                .password(request.getPassword())
                 .build();
 
         User savedUser = userService.register(user);
