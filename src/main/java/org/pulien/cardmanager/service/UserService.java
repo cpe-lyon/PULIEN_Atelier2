@@ -3,6 +3,7 @@ package org.pulien.cardmanager.service;
 import lombok.AllArgsConstructor;
 import org.pulien.cardmanager.entity.User;
 
+import org.pulien.cardmanager.exception.RegistrationException;
 import org.pulien.cardmanager.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,13 +24,24 @@ public class UserService {
         return null;
     }
 
-    public User register(User userToSave) {
-        // add user with encrypted password
-        return null;
+    public User register(User userToSave) throws RegistrationException {
+        if (getByLogin(userToSave.getLogin()) != null){
+            throw new RegistrationException("The given login is already registred !");
+        }
+
+        userToSave.setPassword(encryptionService.encryptPassword(userToSave.getPassword()));
+        userRepository.save(userToSave);
+
+        User savedUser = getByLogin(userToSave.getLogin());
+        if (savedUser == null){
+            throw new RegistrationException("A error appear during the registration");
+        }
+
+        return savedUser;
     }
 
     public List<User> getAllUsers() {
-        return null;
+        return (List<User>) userRepository.findAll();
     }
 
 

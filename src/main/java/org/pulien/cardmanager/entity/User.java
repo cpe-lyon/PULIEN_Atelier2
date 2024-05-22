@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "user")
+@Table(name = "user", schema = "pulien")
 @Data
 public class User {
     @Id
@@ -24,7 +24,6 @@ public class User {
     public User(){}
 
     public User(String firstname, String lastname, String email, String login, String password) {
-        this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;

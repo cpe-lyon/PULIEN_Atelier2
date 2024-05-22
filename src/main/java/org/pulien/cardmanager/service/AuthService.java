@@ -17,6 +17,7 @@ import org.pulien.cardmanager.exception.LoginException;
 public class AuthService {
 
     private final JwtUtil jwtUtil;
+    private final EncryptionService encryptionService;
     private final UserService userService;
 
     public String login(AuthRequest authRequest) throws PasswordException, LoginException {
@@ -26,8 +27,7 @@ public class AuthService {
         } catch (Exception e){
             throw new LoginException("The given login doesn't exists.");
         }
-
-        if(user.getPassword().equals(authRequest.getPassword())){
+        if (encryptionService.checkPassword(authRequest.getPassword(), user.getPassword())){
             return jwtUtil.generateToken(authRequest.getUsername());
         }else {
             throw new PasswordException("The given password is wrong!");
@@ -43,12 +43,8 @@ public class AuthService {
                 .setPassword(request.getPassword())
                 .build();
 
-        User savedUser;
-        try{
-            savedUser = userService.register(user);
-        }catch(Exception e){
-            throw new RegistrationException("A problem appear during the registration");
-        }
+        User savedUser = userService.register(user);
+
         return jwtUtil.generateToken(savedUser.getLogin());
     }
 

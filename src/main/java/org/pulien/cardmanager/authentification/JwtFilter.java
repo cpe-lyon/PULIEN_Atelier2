@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import org.pulien.cardmanager.exception.AuthorizationException;
 import org.springframework.web.filter.GenericFilterBean;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class JwtFilter extends GenericFilterBean {
             httpRequest.setAttribute("username", username);
         } else {
             // Optionally, you can throw an exception if the token is invalid
-            throw new ServletException("Invalid JWT token");
+            throw new AuthorizationException("Invalid JWT token");
         }
 
         chain.doFilter(request, response);

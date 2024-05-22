@@ -18,10 +18,4 @@ public class CardManagerApplication {
 	public JwtUtil jwtUtil() {
 		return new JwtUtil();
 	}
-
-	@Bean
-	public Filter jwtFilter(JwtUtil jwtUtil) {
-		return new JwtFilter(jwtUtil);
-	}
-
 }

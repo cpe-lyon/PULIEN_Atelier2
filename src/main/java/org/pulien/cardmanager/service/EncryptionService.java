@@ -5,12 +5,14 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EncryptionService {
-    public static String encryptPassword(String inputPassword) {
+    private final String Key = "secret";
+
+    public String encryptPassword(String inputPassword) {
         BasicPasswordEncryptor encryptor = new BasicPasswordEncryptor();
         return encryptor.encryptPassword(inputPassword);
     }
 
-    public static boolean checkPassword(String inputPassword, String encryptedStoredPassword) {
+    public boolean checkPassword(String inputPassword, String encryptedStoredPassword) {
         BasicPasswordEncryptor encryptor = new BasicPasswordEncryptor();
         return encryptor.checkPassword(inputPassword, encryptedStoredPassword);
     }
