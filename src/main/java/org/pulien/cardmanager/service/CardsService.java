@@ -4,7 +4,6 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.apache.coyote.BadRequestException;
 import org.pulien.cardmanager.entity.Card;
-import org.pulien.cardmanager.models.dtos.CardDTO;
 import org.pulien.cardmanager.repository.card.CardsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +21,6 @@ import java.util.concurrent.atomic.AtomicReference;
 public class CardsService {
     @Autowired
     private CardsRepository cardsRepository;
-
-    @Autowired
-    private EnumConverters<String> converter;
 
     public ResponseEntity<List<Card>> getCards() {
         return ResponseEntity.ok(cardsRepository.findAll());
@@ -59,11 +55,6 @@ public class CardsService {
         return filteredCards.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    public ResponseEntity<List<Card>> getCardsMoreExpensiveThan(@PathVariable String rarity) {
-        Optional<List<Card>> filteredCards = cardsRepository.findAllByRarity(converter.convertRarity(rarity));
-
-        return filteredCards.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
 
     public ResponseEntity<List<Card>> getCardFromName(@PathVariable String name) {
         Optional<List<Card>> filteredCards = cardsRepository.findAllByName(name);
@@ -71,7 +62,7 @@ public class CardsService {
         return filteredCards.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    public ResponseEntity<Card> updateCardFromId(@RequestBody CardDTO newValue) {
+    /*public ResponseEntity<Card> updateCardFromId(@RequestBody CardDTO newValue) {
         Card card = newValue.toEntity();
         AtomicReference<Card> result = new AtomicReference<>(new Card());
 
@@ -91,7 +82,7 @@ public class CardsService {
     public ResponseEntity<Card> insertCard(@RequestBody CardDTO newValue) {
         Optional<Card> saved = Optional.of(this.cardsRepository.save(newValue.toEntity()));
         return saved.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
-    }
+    }*/
 
     public Card getRandomCard() throws BadRequestException {
         List<Card> allCards = getAllCards();

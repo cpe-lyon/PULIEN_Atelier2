@@ -18,5 +18,4 @@ public interface CardsRepository extends JpaRepository<Card, Long> {
 
     Optional<List<Card>> findAllByPriceIsBetween(int mini, int max);
 
-    Optional<List<Card>> findAllByRarity(Rarities rarity);
 }
