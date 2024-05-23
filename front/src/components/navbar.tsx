@@ -29,7 +29,7 @@ const NavBar = () => {
 
     return (
         <>
-            <div className="flex bg-gray-500 text-white" >
+            <div className="flex bg-gray-500 text-white mx-auto" >
                 {cash}
                 <NavigationMenu className="ihz">
                     <NavigationMenuList>

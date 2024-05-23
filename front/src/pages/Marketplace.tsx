@@ -2,6 +2,7 @@ import NavBar from "@/components/Navbar";
 import MarketService from "@/services/MarketService";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CardDetails  from "@/components/cardDetails";
 
 const Marketplace = () =>{
     const navigate = useNavigate();
@@ -25,15 +26,25 @@ const Marketplace = () =>{
     }, []);
 
 
-
-
-    return(
+    return (
         <>
-            <NavBar></NavBar>
-
-            <div>Marketplace</div>
+            <NavBar />
+            <div className="card-container">
+                {cardInstanceBuyable.map(ci => (
+                    <CardDetails
+                        key={ci.card.id}
+                        country={ci.card.nation}
+                        nameCard={ci.card.name}
+                        height={ci.card.height}
+                        weight={ci.card.weight}
+                        pace={ci.card.pace}
+                        rate={ci.card.rating}
+                        proprio={ci.user.login}
+                    />
+                ))}
+            </div>
         </>
-    )
+    );
 }
 
 export default Marketplace;
