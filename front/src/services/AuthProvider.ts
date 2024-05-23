@@ -1,5 +1,3 @@
-import { redirect } from "react-router-dom";
-
 interface AuthResquest {
     username : string,
     password : string

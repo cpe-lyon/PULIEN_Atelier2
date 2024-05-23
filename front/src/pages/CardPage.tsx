@@ -1,17 +1,10 @@
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import NavBar from "@/components/Navbar";
 
 const CardPage = () =>{
-    const navigate = useNavigate();
-
-    function logout() {
-        localStorage.setItem('auth', '');
-        navigate("/login");
-    }
 
     return(
         <>
-            <Button onClick={logout}>Logout</Button>
+            <NavBar></NavBar>
             <div>CardPage</div>
         </>
     )
