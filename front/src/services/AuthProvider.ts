@@ -1,5 +1,3 @@
-import { redirect } from "react-router-dom";
-
 interface AuthResquest {
     username : string,
     password : string
@@ -12,7 +10,6 @@ interface RegisterResquest {
     email : string,
     password : string,
 }
-
 
 const authProvider = {
     login: ({username, password}: AuthResquest ) =>  {

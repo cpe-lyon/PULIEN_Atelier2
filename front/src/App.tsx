@@ -1,10 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import PrivateRoute from './pages/PrivateRoute';
-import Login from './pages/Login';
+import Login from './pages/Login.tsx';
 import CardPage from './pages/CardPage';
 import UserPage from './pages/UserPage';
-import Register from './pages/Register';
+import Register from './pages/Register.tsx';
 import AlreadyConnected from './pages/AlreadyConnected';
 import { JSX } from 'react/jsx-runtime';
 
@@ -14,7 +14,7 @@ function App() {
     return (
       <PrivateRoute>
         {element}
-      </PrivateRoute> 
+      </PrivateRoute>
     );
   };
 
