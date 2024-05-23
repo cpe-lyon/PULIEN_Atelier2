@@ -11,6 +11,8 @@ import org.pulien.cardmanager.entity.User;
 import org.pulien.cardmanager.repository.UserRepository;
 import org.pulien.cardmanager.repository.card.CardInstancesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,7 +37,7 @@ public class CardsInstanceService {
         return cardInstancesRepository.findById(id).map(cardInstance -> {
             cardInstance.setUser(newCardInstance.getUser());
             cardInstance.setCard(newCardInstance.getCard());
-            cardInstance.setNickname(newCardInstance.getNickname());
+            cardInstance.setBuyable(newCardInstance.isBuyable());
             return this.cardInstancesRepository.save(cardInstance);
         }).orElseThrow(() -> new RuntimeException("CardInstance not found with id " + id));
     }
@@ -52,11 +54,11 @@ public class CardsInstanceService {
         return this.cardInstancesRepository.findById(id);
     }
 
-    public CardInstance createCardInstance(Card card, User user, @Nullable String nickname) throws BadRequestException {
+    public CardInstance createCardInstance(Card card, User user, boolean isBuyable) throws BadRequestException {
         CardInstance cardInstanceToSave = CardInstance.builder()
                 .card(card)
                 .user(user)
-                .nickname(nickname)
+                .isBuyable(isBuyable)
                 .build();
 
         CardInstance savedCardInstance = cardInstancesRepository.save(cardInstanceToSave);
@@ -67,10 +69,11 @@ public class CardsInstanceService {
         return savedCardInstance;
     }
 
-    public List<CardInstance> createCardInstance(List<Card> cards, User user) throws BadRequestException {
+    public List<CardInstance> createCardInstance(List<Card> cards, User user, boolean isBuyable) throws BadRequestException {
         List<CardInstance> cardInstances = cards.stream().map(card ->{
             return CardInstance.builder()
                     .card(card)
+                    .isBuyable(isBuyable)
                     .user(user)
                     .build();
         }).toList();
@@ -86,5 +89,9 @@ public class CardsInstanceService {
 
     public List<CardInstance> getCardsByUserLogin(String username) {
         return cardInstancesRepository.findCardInstanceByUserLogin(username);
+    }
+
+    public Page<CardInstance> getBuyableCardInstances(Pageable pageable) {
+        return cardInstancesRepository.findByBuyableIsTrue(pageable);
     }
 }
