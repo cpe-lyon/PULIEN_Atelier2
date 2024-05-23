@@ -21,7 +21,6 @@ const NavBar = () => {
     useEffect(() => {
         const getCashCach = async () => {
             let data = await getCash();
-            console.log('zvhdzjcvd')
             setCash(data);
         }
         getCashCach()

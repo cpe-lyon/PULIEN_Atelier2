@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface MarketPlaceService {
     Optional<CardInstance> buy(String login, Long cardInstanceId) throws UserNotFoundException, CardNotFoundException, BadRequestException;
 
-    Page<Card> displayMarketPlace(Pageable pageable);
+    Page<CardInstance> displayMarketPlace(Pageable pageable, String login);
 
     Optional<CardInstance> sell(Long cardId, String login) throws CardNotFoundException, AuthorizationException;
 }
