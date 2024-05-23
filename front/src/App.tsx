@@ -4,9 +4,9 @@ import PrivateRoute from './pages/PrivateRoute';
 import Login from './pages/Login';
 import CardPage from './pages/CardPage';
 import UserPage from './pages/UserPage';
-import Register from './pages/Register';
 import AlreadyConnected from './pages/AlreadyConnected';
 import { JSX } from 'react/jsx-runtime';
+import Register from './pages/Register';
 
 
 function App() {
