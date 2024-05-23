@@ -1,7 +1,16 @@
+import { redirect } from "react-router-dom";
 
 interface AuthResquest {
     username : string,
     password : string
+}
+
+interface RegisterResquest {
+    firstname : string,
+    lastname : string,
+    login : string,
+    email : string,
+    password : string,
 }
 
 
@@ -17,11 +26,10 @@ const authProvider = {
                 if (response.status < 200 || response.status >= 300) {
                     throw new Error(response.statusText);
                 }
-                return response.json();
+                return response.text();
             })
             .then(token => {
-                console.log(token)
-                localStorage.setItem('auth', JSON.stringify(token));
+                localStorage.setItem('auth', token);
             })
             .catch(() => {
                 throw new Error('Network error')
@@ -29,6 +37,26 @@ const authProvider = {
     },
     logout: () =>  {
         localStorage.setItem('auth', '');
+    },
+    register: ({firstname, lastname, login, email,password}: RegisterResquest ) =>  {
+        const request = new Request('http://localhost:8080/auth/register', {
+            method: 'POST',
+            body: JSON.stringify({firstname, lastname, login, email,password}),
+            headers: new Headers({ 'Content-Type': 'application/json' }),
+        });
+        return fetch(request)
+            .then(response => {
+                if (response.status < 200 || response.status >= 300) {
+                    throw new Error(response.statusText);
+                }
+                return response.text();
+            })
+            .then(token => {
+                localStorage.setItem('auth', token);
+            })
+            .catch(() => {
+                throw new Error('Network error')
+            });
     },
     checkAuth: () => {
         if(localStorage.getItem('auth') == '' || localStorage.getItem('auth') === undefined  || localStorage.getItem('auth') === null){

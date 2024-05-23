@@ -1,13 +1,16 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import PrivateRoute from './pages/PrivateRoute';
 import Login from './pages/Login';
 import CardPage from './pages/CardPage';
 import UserPage from './pages/UserPage';
+import Register from './pages/Register';
+import AlreadyConnected from './pages/AlreadyConnected';
+import { JSX } from 'react/jsx-runtime';
 
 
 function App() {
-  const wrapPrivateRoute = (element) => {
+  const wrapPrivateRoute = (element: JSX.Element) => {
     return (
       <PrivateRoute>
         {element}
@@ -18,10 +21,12 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={wrapPrivateRoute(<CardPage />)} />
+        <Route path="/authentified" element={<AlreadyConnected />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/card/*" element={wrapPrivateRoute(<CardPage />)} />
-        <Route path="/user/*" element={wrapPrivateRoute(<UserPage />)} />
+        <Route path="/" element={<Navigate to="/card"/>} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/card" element={wrapPrivateRoute(<CardPage />)} />
+        <Route path="/user" element={wrapPrivateRoute(<UserPage />)} />
       </Routes>
     </Router>
   );
