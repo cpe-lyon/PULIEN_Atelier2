@@ -47,7 +47,8 @@ public class UserService {
         for (int i = 0; i < 5; i++) {
             randomCards.add(cardsService.getRandomCard());
         }
-        cardsInstanceService.createCardInstance(randomCards, savedUser);
+
+        cardsInstanceService.createCardInstance(randomCards, savedUser, false);
 
         return savedUser;
     }
