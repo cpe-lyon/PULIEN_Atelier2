@@ -1,15 +1,15 @@
-import Navbar from "@/components/Navbar";
-import {useEffect, useState} from "react";
-import UserService from "@/services/UserService";
-import {useNavigate} from "react-router-dom";
-import InventoryTable from "@/components/Table.tsx";
-import CardPreview from "@/components/CardPreview.tsx";
+import { useNavigate } from "react-router-dom";
+import InventoryTable from "@/components/Table";
+import CardPreview from "@/components/CardPreview";
 
-const CardPage = () =>{
-    const [username, setUsername] = useState('');
-    const [usercash, setUserCash] = useState(0);
+import {useEffect, useState} from "react";
+import {fetchCards, getCardDetails} from "../services/CardService.ts";
+import {Card} from "@/models/Card";
+
+const CardPage = () => {
     const navigate = useNavigate();
-    /*const [cards, setCards] = useState({});
+    const [cards, setCards] = useState<Card[]>([{}]);
+    const [cardToDisplay, setCardToDisplay] = useState<Card>({});
 
     function getCards(){
         return fetchCards();
@@ -21,39 +21,29 @@ const CardPage = () =>{
             setCards(data);
         }
 
-        getAllCards().then(response => {
-            console.log(cards);
-        })
-    }, []);*/
+        getAllCards();
+    }, []);
 
-    function logout() {
-        localStorage.setItem('auth', '');
-        navigate("/login");
+    async function onClickOnCard(id: number) {
+        // TODO à voir si c'est pas mieux d'utiliser le state cards plutot
+        let card: Card | undefined = await getCardDetails(id);
+        if (card) {
+            setCardToDisplay(card);
+        }
     }
 
-    useEffect(() => {
-        const getData = async () => {
-            UserService.getUser().then(userData =>{
-                setUsername(userData.login)
-                setUserCash(userData.cash)
-            } )
-
-        };
-        getData();
-    }, []);
     return(
-        <>
-            <Navbar username={username} cash={usercash}></Navbar>
-            <div>CardPage</div>
-            <div className=" w-screen bg-slate-700 grid grid-cols-3 gap-4">
-                <div className="col-span-2 bg-green-500 h-full px-2">
-                    <InventoryTable />
-                </div>
-                <div className="col-span-1 bg-blue-500 h-full px-2 ">
-                    <CardPreview />
-                </div>
+        <div className=" w-screen bg-slate-700 grid grid-cols-3 gap-4">
+            {
+                cards.map((card: Card) => <div>{card.name}</div>)
+            }
+            <div className="col-span-2 bg-green-500 h-full px-2">
+                <InventoryTable />
             </div>
-        </>
+            <div className="col-span-1 bg-blue-500 h-full px-2 ">
+                <CardPreview />
+            </div>
+        </div>
     )
 }
 
