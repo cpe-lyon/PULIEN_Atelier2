@@ -12,6 +12,8 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import authProvider from "@/services/AuthProvider"
+import { Link, Navigate, useNavigate } from "react-router-dom"
 
 const formSchema = z.object({
     login: z.string().min(6,{
@@ -24,6 +26,8 @@ const formSchema = z.object({
 
 const loginForm = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
+    const navigate = useNavigate();
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -31,11 +35,19 @@ const loginForm = () => {
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        const login : string = values['login']
+        const password : string = values['password']
+
+        await authProvider.login({username : login, password : password});
+        navigate("/");
     }
 
-    return (
+    function isConnected(){
+        return authProvider.checkAuth();
+    }
+
+    return !isConnected() ? (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <FormField
@@ -64,10 +76,14 @@ const loginForm = () => {
                         </FormItem>
                     )}
                 />
+
+                <Button>
+                    <Link to="/register">Regiter</Link>
+                </Button>
                 <Button type="submit">Login</Button>
             </form>
         </Form>
-    )
+    ) :  <Navigate to="/authentified" />
 }
 
 export default loginForm;

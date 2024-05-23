@@ -12,6 +12,8 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import authProvider from "@/services/AuthProvider"
+import { useNavigate } from "react-router-dom"
 
 const formSchema = z.object({
     firstname: z.string().min(2,{
@@ -32,6 +34,8 @@ const formSchema = z.object({
 })
 
 const Register = () => {
+    const navigate = useNavigate()
+
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -40,8 +44,15 @@ const Register = () => {
         },
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
         console.log(values)
+        const email = values['email'];
+        const firstname = values['firstname'];
+        const lastname = values['lastname'];
+        const login = values['login'];
+        const password = values['password'];
+        await authProvider.register({firstname, lastname, login, email,password})
+        navigate("/")
     }
 
     return (
