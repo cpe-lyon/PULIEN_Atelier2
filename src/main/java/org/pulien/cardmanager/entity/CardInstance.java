@@ -25,6 +25,6 @@ public class CardInstance {
     @JoinColumn(name = "card_id")
     private Card card;
 
-    @Column(name = "nickname")
-    private String nickname;
+    @Column(name = "is_buyable")
+    private boolean isBuyable;
 }
