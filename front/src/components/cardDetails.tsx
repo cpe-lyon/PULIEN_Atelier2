@@ -18,6 +18,7 @@ import {
 
 
 import { cn } from "@/lib/utils"
+import {Button} from "react-bootstrap";
 
     interface CardProperties {
         country:string,
@@ -27,11 +28,14 @@ import { cn } from "@/lib/utils"
         pace:number,
         rate:number,
         proprio:string,
+        id: number,
+        buyable: boolean,
+        onClickOnBuy: (id: number) => void;
     }
 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const CardDetails = ({country,nameCard,height,weight,pace,rate,proprio}:CardProperties) => {
+const CardDetails = ({country,nameCard,height,weight,pace,rate,proprio, cardInstanceId , buyable, onClickOnBuy}:CardProperties) => {
     let colorCard;
     if(rate <= 89){colorCard = "bg-stone-500";}
     else if(rate <= 91){colorCard = "bg-amber-500";}
@@ -43,7 +47,7 @@ const CardDetails = ({country,nameCard,height,weight,pace,rate,proprio}:CardProp
                 <CardTitle className="ml-auto mr-auto">{nameCard}</CardTitle>
 
                 <Avatar className="ml-auto mr-auto">
-                    <AvatarImage src="https://cdn.discordapp.com/attachments/1197895183002513480/1243184962082177097/IMG_3456.jpg?ex=66508db8&is=664f3c38&hm=05c0e784fc12ae8f4e89892d644a1c022a52b6f23c1f5514cfddce534f7d3858&"/>
+                    <AvatarImage src="https://media.licdn.com/dms/image/D4E03AQHjwroQRk_WPw/profile-displayphoto-shrink_100_100/0/1705959403635?e=1721865600&v=beta&t=C7SW-VSc2cqGH3mpYKeVS2_XiSxalnMpBjEvy2yjqME"/>
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <CardTitle className="ml-auto mr-auto">{country}</CardTitle>
@@ -70,6 +74,8 @@ const CardDetails = ({country,nameCard,height,weight,pace,rate,proprio}:CardProp
                 <CardDescription className="ml-auto mr-auto text-white">
                     <span style={{ fontWeight: 'bold' }}>Propriétaire :</span> {proprio}
                 </CardDescription>
+
+                {buyable && <Button className={"mx-auto mt-5 bg-lime-600 p-1 w-1/2"} onClick={() => onClickOnBuy(cardInstanceId)}>Acheter</Button>}
             </CardHeader>
         </Card>
     )

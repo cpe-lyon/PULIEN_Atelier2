@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import authProvider from "@/services/AuthProvider"
-import { useNavigate } from "react-router-dom"
+import {Link, useNavigate} from "react-router-dom"
 
 const formSchema = z.object({
     firstname: z.string().min(2,{
@@ -57,15 +57,15 @@ const Register = () => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 w-1/5 mx-auto mt-32">
                 <FormField
                     control={form.control}
                     name="firstname"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel>Firstname</FormLabel>
+                            <FormLabel>Prénom</FormLabel>
                             <FormControl>
-                                <Input placeholder="Firstname" {...field} className={"w-1/5"} />
+                                <Input placeholder="Prénom" {...field}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -76,9 +76,9 @@ const Register = () => {
                     name="lastname"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel>Lastname</FormLabel>
+                            <FormLabel>Nom</FormLabel>
                             <FormControl>
-                                <Input placeholder="Lastname" {...field} className={"w-1/5"}/>
+                                <Input placeholder="Nom" {...field}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -89,9 +89,9 @@ const Register = () => {
                     name="login"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel>Login</FormLabel>
+                            <FormLabel>Identifiant</FormLabel>
                             <FormControl>
-                                <Input placeholder="Login" {...field} className={"w-1/5"}/>
+                                <Input placeholder="Identifiant" {...field}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -104,7 +104,7 @@ const Register = () => {
                         <FormItem>
                             <FormLabel>Email</FormLabel>
                             <FormControl>
-                                <Input placeholder="Email" {...field} className={"w-1/4"}/>
+                                <Input placeholder="Email" {...field}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -115,15 +115,18 @@ const Register = () => {
                     name="password"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel>Password</FormLabel>
+                            <FormLabel>Mot de passe</FormLabel>
                             <FormControl>
-                                <Input placeholder="Password" {...field} className={"w-1/5"}/>
+                                <Input placeholder="Mot de passe" {...field} />
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Submit</Button>
+                <div>
+                    <Link to="/login">Vous êtes déjà client ? Connexion</Link>
+                </div>
+                <Button type="submit" className={"w-full"}>Créer</Button>
             </form>
         </Form>
     )

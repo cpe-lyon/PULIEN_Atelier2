@@ -1,8 +1,13 @@
-
-/* App.css */
 .card-container {
     display: grid;
-    grid-template-columns: repeat(4, 2fr); /* 3 colonnes de largeur égale */
-    gap: 20px; /* Espace entre les éléments */
-    padding: 16px; /* Padding autour du conteneur */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+    gap: 20px;
+    padding: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.navLinkHover:hover{
+    text-decoration: underline;
 }

@@ -1,10 +1,10 @@
-import NavBar from "@/components/Navbar";
+import Navbar from "@/components/Navbar";
 
 const CardPage = () =>{
 
     return(
         <>
-            <NavBar></NavBar>
+            <Navbar></Navbar>
             <div>CardPage</div>
         </>
     )
