@@ -32,121 +32,9 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-
-const cards = [
-    {
-        cardId: 1,
-        name: "Card 1",
-        image: "https://via.placeholder.com/150",
-        nation: "Nation 1",
-        pace: 80,
-        weight: 70,
-        height: 180,
-        price: 100,
-        rating: 85,
-    },
-    {
-        cardId: 2,
-        name: "Card 2",
-        image: "https://via.placeholder.com/150",
-        nation: "Nation 2",
-        pace: 75,
-        weight: 65,
-        height: 175,
-        price: 200,
-        rating: 90,
-    },
-    {
-        cardId: 3,
-        name: "Card 3",
-        image: "https://via.placeholder.com/150",
-        nation: "Nation 3",
-        pace: 90,
-        weight: 80,
-        height: 190,
-        price: 300,
-        rating: 88,
-    },
-    {
-        cardId: 4,
-        name: "Card 4",
-        image: "https://via.placeholder.com/150",
-        nation: "Nation 4",
-        pace: 85,
-        weight: 75,
-        height: 185,
-        price: 150,
-        rating: 92,
-    },
-    {
-        cardId: 5,
-        name: "Card 5",
-        image: "https://via.placeholder.com/150",
-        nation: "Nation 5",
-        pace: 78,
-        weight: 68,
-        height: 178,
-        price: 250,
-        rating: 87,
-    },
-    {
-        cardId: 6,
-        name: "Card 6",
-        image: "https://via.placeholder.com/150",
-        nation: "Nation 6",
-        pace: 82,
-        weight: 72,
-        height: 182,
-        price: 120,
-        rating: 86,
-    },
-    {
-        cardId: 7,
-        name: "Card 7",
-        image: "https://via.placeholder.com/150",
-        nation: "Nation 7",
-        pace: 77,
-        weight: 67,
-        height: 177,
-        price: 210,
-        rating: 89,
-    },
-    {
-        cardId: 8,
-        name: "Card 8",
-        image: "https://via.placeholder.com/150",
-        nation: "Nation 8",
-        pace: 88,
-        weight: 78,
-        height: 188,
-        price: 320,
-        rating: 91,
-    },
-    {
-        cardId: 9,
-        name: "Card 9",
-        image: "https://via.placeholder.com/150",
-        nation: "Nation 9",
-        pace: 83,
-        weight: 73,
-        height: 183,
-        price: 170,
-        rating: 84,
-    },
-    {
-        cardId: 10,
-        name: "Card 10",
-        image: "https://via.placeholder.com/150",
-        nation: "Nation 10",
-        pace: 79,
-        weight: 69,
-        height: 179,
-        price: 190,
-        rating: 85,
-    },
-];
-
-export type Card = typeof cards[0];
+import {Card} from "@/models/Card";
+import {useEffect} from "react";
+import {TableInventoryProperty} from "@/models/TableInventoryProperty.ts";
 
 export const columns: ColumnDef<Card>[] = [
     {
@@ -220,7 +108,7 @@ export const columns: ColumnDef<Card>[] = [
     },
 ];
 
-const InventoryTable = () => {
+const InventoryTable = (properties: TableInventoryProperty) => {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
         []
@@ -229,8 +117,25 @@ const InventoryTable = () => {
         React.useState<VisibilityState>({})
     const [rowSelection, setRowSelection] = React.useState({})
 
+    useEffect(() => {
+        console.log(properties);
+    }, []);
+
+    const onCardClick = (id: string) => {
+        let index = parseInt(id);
+
+        if (isNaN(index)) {
+            console.error("error while converting index to int.");
+            return;
+        }
+
+        let card: Card = properties.cards[index];
+
+        properties.setCardDetails(card);
+    }
+
     const table = useReactTable({
-        data: cards,
+        data: properties.cards,
         columns,
         onSortingChange: setSorting,
         onColumnFiltersChange: setColumnFilters,
@@ -315,7 +220,7 @@ const InventoryTable = () => {
                                 {table.getRowModel().rows?.length ? (
                                     table.getRowModel().rows.map((row) => (
                                         <TableRow
-                                            onClick={()=>console.log("Card Clicked !")}
+                                            onClick={() => onCardClick(row.id)}
                                             className={`${parseInt(row.id,10) % 2 == 0  ? 'bg-white' : 'bg-gray-200'}`}
                                             key={row.id}
                                             data-state={row.getIsSelected() && "selected"}

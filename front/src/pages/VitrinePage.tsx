@@ -1,33 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {useEffect, useState} from "react";
 import Navbar from "@/components/Navbar";
 import CardContainer from "@/components/CardContainer";
-import MarketService from "@/services/MarketService";
-import UserService from "@/services/UserService";
-import MarketPlaceAlert from "@/components/MarketPlaceAlert";
-import CardService from "@/services/CardService";
+import {useAtom} from "jotai";
+import {userCash, username} from "@/context/jotai.ts";
+import CardService from "@/services/CardService.ts";
+import UserService from "@/services/UserService.ts";
 
 const Vitrine = () => {
-    const navigate = useNavigate();
     const [cards, setCards] = useState([]);
-    const [username, setUsername] = useState('');
-    const [usercash, setUserCash] = useState(0);
+    const [usernameFromContext, setUsername] = useAtom(username);
+    const [usercashFromContext, setUsercash] = useAtom(userCash);
 
     useEffect(() => {
         const getData = async () => {
             const data = await CardService.getAll();
             setCards(data)
-
-            const userData = await UserService.getUser();
-            setUsername(userData.login)
-            setUserCash(userData.cash)
         };
         getData();
     }, []);
 
     return (
         <>
-            <Navbar username={username} cash={usercash}/>
+            <Navbar username={usernameFromContext} cash={usercashFromContext}/>
             <CardContainer cards={cards}/>
         </>
     );

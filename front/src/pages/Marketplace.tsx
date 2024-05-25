@@ -1,22 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import ModalDialog from "@/components/MarketPlaceDialog";
 import MarketService from "@/services/MarketService";
 import UserService from "@/services/UserService";
 import MarketPlaceAlert from "@/components/MarketPlaceAlert";
 import CardInstanceContainer from "@/components/CardInstanceContainer";
+import {useAtom} from "jotai";
+import {userCash, username} from "@/context/jotai.ts";
 
 const Marketplace = () => {
-    const navigate = useNavigate();
+    const [usernameFromContext, setUsername] = useAtom(username);
+    const [usercashFromContext, setUsercash] = useAtom(userCash);
     const [cardInstanceBuyable, setCardInstanceBuyable] = useState([]);
-    const [username, setUsername] = useState('');
-    const [usercash, setUserCash] = useState(0);
     const [displayDialog, setDisplayDialog] = useState({
         display: false,
         price: 0,
         solde: 1000,
-        total: -1
+        total: -1,
+        cardInstanceId: 1
     });
     const [alertProps, setAlertProps] = useState({
         display: false,
@@ -30,7 +31,7 @@ const Marketplace = () => {
         return response.content;
     };
 
-    const buyCardInstanceBuyable = async (id) => {
+    const buyCardInstanceBuyable = async (id: number) => {
 
         let success;
         try{
@@ -39,7 +40,10 @@ const Marketplace = () => {
         }catch (e) {
             success = false;
         }
+        console.log('achat de carte avec id', id);
+
         const cardInstance = cardInstanceBuyable.find(i => i.id === id);
+
         let alertProps = {
             display: true,
             playerName : cardInstance.card.name,
@@ -57,10 +61,6 @@ const Marketplace = () => {
 
         const data = await getCardInstanceBuyable();
         setCardInstanceBuyable(data);
-
-        const userData = await UserService.getUser();
-        setUsername(userData.login)
-        setUserCash(userData.cash)
     };
 
     const dialogToBuy = async (id) => {
@@ -85,18 +85,13 @@ const Marketplace = () => {
             const data = await getCardInstanceBuyable();
             setCardInstanceBuyable(data);
 
-            UserService.getUser().then(userData =>{
-                setUsername(userData.login)
-                setUserCash(userData.cash)
-            } )
-
         };
         getData();
     }, []);
 
     return (
         <>
-            <Navbar username={username} cash={usercash}/>
+            <Navbar username={usernameFromContext} cash={usercashFromContext}/>
             <MarketPlaceAlert alertProps={alertProps}></MarketPlaceAlert>
             <CardInstanceContainer cardInstanceBuyable={cardInstanceBuyable} dialogToBuy={dialogToBuy} />
             <ModalDialog displayDialog={displayDialog} setDisplayDialog={setDisplayDialog} buyCardInstanceBuyable={buyCardInstanceBuyable} />

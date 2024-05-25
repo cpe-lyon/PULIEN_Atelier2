@@ -27,7 +27,7 @@ const UserService = {
             throw error;
         }
     },
-    getUser : async (): Promise<> => {
+    getUser : async (): Promise<any> => {
         try {
 
             const token = localStorage.getItem('auth');
