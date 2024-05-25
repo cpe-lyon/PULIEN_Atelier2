@@ -1,6 +1,6 @@
 
 const UserService = {
-    getUserCash : async (): Promise<> => {
+    getUserCash : async (): Promise<any> => {
         try {
 
             const token = localStorage.getItem('auth');
@@ -17,7 +17,8 @@ const UserService = {
                     if (response.status < 200 || response.status >= 300) {
                         throw new Error(response.statusText);
                     }
-                    return response.json().then( i=> i.cash);
+                    console.log(response);
+                    return response.json().then( i => i.cash);
                 })
                 .catch(() => {
                     throw new Error('Network error')
@@ -26,7 +27,7 @@ const UserService = {
             throw error;
         }
     },
-    getUser : async (): Promise<> => {
+    getUser : async (): Promise<any> => {
         try {
 
             const token = localStorage.getItem('auth');
