@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
-import CardContainer from "@/components/CardContainer";
 import ModalDialog from "@/components/MarketPlaceDialog";
 import MarketService from "@/services/MarketService";
 import UserService from "@/services/UserService";
 import MarketPlaceAlert from "@/components/MarketPlaceAlert";
+import CardInstanceContainer from "@/components/CardInstanceContainer";
 
 const Marketplace = () => {
     const navigate = useNavigate();
@@ -85,9 +85,11 @@ const Marketplace = () => {
             const data = await getCardInstanceBuyable();
             setCardInstanceBuyable(data);
 
-            const userData = await UserService.getUser();
-            setUsername(userData.login)
-            setUserCash(userData.cash)
+            UserService.getUser().then(userData =>{
+                setUsername(userData.login)
+                setUserCash(userData.cash)
+            } )
+
         };
         getData();
     }, []);
@@ -96,7 +98,7 @@ const Marketplace = () => {
         <>
             <Navbar username={username} cash={usercash}/>
             <MarketPlaceAlert alertProps={alertProps}></MarketPlaceAlert>
-            <CardContainer cardInstanceBuyable={cardInstanceBuyable} dialogToBuy={dialogToBuy} />
+            <CardInstanceContainer cardInstanceBuyable={cardInstanceBuyable} dialogToBuy={dialogToBuy} />
             <ModalDialog displayDialog={displayDialog} setDisplayDialog={setDisplayDialog} buyCardInstanceBuyable={buyCardInstanceBuyable} />
         </>
     );

@@ -7,6 +7,7 @@ import Register from './pages/Register';
 import AlreadyConnected from './pages/AlreadyConnected';
 import { JSX } from 'react/jsx-runtime';
 import Marketplace from './pages/Marketplace';
+import Vitrine from "@/pages/VitrinePage";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/card" element={wrapPrivateRoute(<CardPage />)} />
         <Route path="/marketplace" element={wrapPrivateRoute(<Marketplace />)} />
+        <Route path="/vitrine" element={wrapPrivateRoute(<Vitrine />)} />
       </Routes>
     </Router>
   );
