@@ -1,31 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import {NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuLink,} from "./ui/navigation-menu"
 import authProvider from "@/services/AuthProvider";
-import UserService from "@/services/UserService";
-import { useEffect, useState } from "react";
 import {Avatar, AvatarImage} from "@/components/ui/avatar";
 
-const Navbar = () => {
-    const [cash, setCash] = useState(0);
+const Navbar = (({username,cash}) => {
     const navigate = useNavigate();
 
     function logout() {
         authProvider.logout();
         navigate("/login", { replace: true })
     }
-
-    function getCash(){
-        return UserService.getUserCash();;
-    }
-
-    useEffect(() => {
-        const getCashCach = async () => {
-            let data = await getCash();
-            setCash(data);
-        }
-        getCashCach()
-    }, []);
-    
 
     return (
         <>
@@ -37,7 +21,7 @@ const Navbar = () => {
                         </Avatar>
                     </a>
                     <p className="ml-2">
-                        tclere : {cash} $
+                        {username} : {cash} $
                     </p>
                 </NavigationMenuLink>
                 <NavigationMenuList className="space-x-12">
@@ -57,6 +41,6 @@ const Navbar = () => {
             </NavigationMenu>
         </>
     )
-}
+});
 
 export default Navbar;

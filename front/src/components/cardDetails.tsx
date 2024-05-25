@@ -75,7 +75,7 @@ const CardDetails = ({country,nameCard,height,weight,pace,rate,proprio, cardInst
                     <span style={{ fontWeight: 'bold' }}>Propriétaire :</span> {proprio}
                 </CardDescription>
 
-                {buyable && <Button className={"mx-auto mt-5 bg-lime-600 p-1 w-1/2"} onClick={() => onClickOnBuy(cardInstanceId)}>Acheter</Button>}
+                {buyable && <Button className={"mx-auto mt-5 bg-lime-600 p-1 w-1/2"} onClick={async () => await onClickOnBuy(cardInstanceId)}>Acheter</Button>}
             </CardHeader>
         </Card>
     )
