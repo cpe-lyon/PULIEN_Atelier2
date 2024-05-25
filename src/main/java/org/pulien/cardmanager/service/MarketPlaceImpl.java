@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -64,6 +65,7 @@ public class MarketPlaceImpl implements MarketPlaceService {
         User seller = cardInstance1.getUser();
         int currentSellerCash = cardInstance1.getUser().getCash();
         seller.setCash(cardInstance1.getCard().getPrice() + currentSellerCash);
+        userRepository.save(seller);
 
         // Cards is now owned by buyer and the instance is not buyable anymore X
         cardInstance1.setUser(savedUser);
@@ -74,9 +76,8 @@ public class MarketPlaceImpl implements MarketPlaceService {
     }
 
     @Override
-    public Page<Card> displayMarketPlace(Pageable pageable) {
-        return this.cardsInstanceService.getBuyableCardInstances(pageable)
-                .map(CardInstance::getCard);
+    public Page<CardInstance> displayMarketPlace(Pageable pageable, String login) {
+        return this.cardsInstanceService.getBuyableCardInstances(pageable, login);
     }
 
     @Override

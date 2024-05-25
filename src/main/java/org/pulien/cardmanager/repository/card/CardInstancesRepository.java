@@ -21,6 +21,6 @@ public interface CardInstancesRepository extends JpaRepository<CardInstance, Lon
     @Query("SELECT ci FROM CardInstance ci WHERE ci.user.login = :login")
     List<CardInstance> findCardInstanceByUserLogin(String login);
 
-    @Query("SELECT ci FROM CardInstance ci WHERE ci.isBuyable = true")
-    Page<CardInstance> findByBuyableIsTrue(Pageable pageable);
+    @Query("SELECT ci FROM CardInstance ci WHERE ci.isBuyable = true AND ci.user.login != :login" )
+    Page<CardInstance> findByBuyableIsTrue(Pageable pageable, String login);
 }

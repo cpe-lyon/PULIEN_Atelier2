@@ -49,15 +49,15 @@ const loginForm = () => {
 
     return !isConnected() ? (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5 w-1/5 mx-auto mt-64">
                 <FormField
                     control={form.control}
                     name="login"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel>Login</FormLabel>
+                            <FormLabel>Identifiant</FormLabel>
                             <FormControl>
-                                <Input placeholder="Login" {...field} className={"w-1/5"}/>
+                                <Input placeholder="Identifiant" {...field}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
@@ -68,19 +68,18 @@ const loginForm = () => {
                     name="password"
                     render={({field}) => (
                         <FormItem>
-                            <FormLabel>Password</FormLabel>
+                            <FormLabel>Mot de passe</FormLabel>
                             <FormControl>
-                                <Input placeholder="Password" {...field} className={"w-1/5"}/>
+                                <Input placeholder="Mot de passe" type={"password"} {...field} />
                             </FormControl>
                             <FormMessage/>
                         </FormItem>
                     )}
                 />
-
-                <Button>
-                    <Link to="/register">Regiter</Link>
-                </Button>
-                <Button type="submit">Login</Button>
+                <div>
+                    <Link to="/register">Créer un compte</Link>
+                </div>
+                <Button type="submit" className="w-full">Connexion</Button>
             </form>
         </Form>
     ) :  <Navigate to="/authentified" />

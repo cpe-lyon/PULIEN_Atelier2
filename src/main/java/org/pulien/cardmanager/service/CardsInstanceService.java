@@ -13,6 +13,7 @@ import org.pulien.cardmanager.repository.card.CardInstancesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -91,7 +92,7 @@ public class CardsInstanceService {
         return cardInstancesRepository.findCardInstanceByUserLogin(username);
     }
 
-    public Page<CardInstance> getBuyableCardInstances(Pageable pageable) {
-        return cardInstancesRepository.findByBuyableIsTrue(pageable);
+    public Page<CardInstance> getBuyableCardInstances(Pageable pageable, String login) {
+        return cardInstancesRepository.findByBuyableIsTrue(pageable, login);
     }
 }

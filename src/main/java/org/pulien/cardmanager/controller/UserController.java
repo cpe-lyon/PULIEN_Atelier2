@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import org.pulien.cardmanager.entity.User;
 import org.pulien.cardmanager.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,4 +22,9 @@ public class UserController {
 
     // et d'autres endpoints...
     // TODO :: maxime
+
+    @GetMapping(value = "/current")
+    public ResponseEntity<User> getCurrentUser(@RequestAttribute String username){
+        return ResponseEntity.ok(userService.getByLogin(username));
+    }
 }

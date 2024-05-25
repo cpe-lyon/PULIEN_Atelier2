@@ -11,11 +11,13 @@ const AlreadyConnected = () => {
 
     return (
         <>
-            <div>You are already connected!</div>
-            <Button onClick={logout}>Logout</Button>
-            <Button asChild>
-                <Link to="/card">Acceuil</Link>
-            </Button>
+            <div className={"w-1/5 mx-auto mt-32 flex justify-between "}>
+                <div className={"pt-2"}>Vous êtes déjà connecté!</div>
+                <Button onClick={logout}>Déconnexion</Button>
+                <Button asChild>
+                    <Link to="/card">Acceuil</Link>
+                </Button>
+            </div>
         </>
     );
 };

@@ -40,8 +40,8 @@ public class MarketPlaceController {
     }
 
     @GetMapping
-    public Page<Card> displayMarketPlace(@PageableDefault(value = 5) Pageable pageable) {
-        return this.marketPlaceService.displayMarketPlace(pageable);
+    public Page<CardInstance> displayMarketPlace(@PageableDefault(value = 5) Pageable pageable, @RequestAttribute String username) {
+        return this.marketPlaceService.displayMarketPlace(pageable, username);
     }
 
     @PostMapping("/sell/{cardInstanceId}")

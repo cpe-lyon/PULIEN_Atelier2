@@ -1,0 +1,13 @@
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+    gap: 20px;
+    padding: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.navLinkHover:hover{
+    text-decoration: underline;
+}
