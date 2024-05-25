@@ -15,7 +15,7 @@ export const fetchCards = async (): Promise<any> => {
             if (response.status < 200 || response.status >= 300) {
                 throw new Error(response.statusText);
             }
-            return response.json().then((cardInstances: any) => cardInstances.map((cardInstance: any) => cardInstance.card));
+            return response.json();
         })
         .catch(() => {
             throw new Error('Network error')

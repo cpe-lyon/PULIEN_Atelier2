@@ -15,3 +15,7 @@
 .card-details-container {
     background-image: url(src/assets/changingRoom.jpg);
 }
+
+.card-page-container {
+    height: 92vh;
+}
