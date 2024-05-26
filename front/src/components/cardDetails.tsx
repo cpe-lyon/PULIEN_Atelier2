@@ -40,7 +40,7 @@ const CardDetails = ({country,nameCard,height,weight,pace,rate,proprio, buyable,
     let colorCard;
     if(rate <= 89){colorCard = "bg-stone-500";}
     else if(rate <= 91){colorCard = "bg-amber-500";}
-    else if(rate > 92){colorCard = "bg-violet-800";}
+    else if(rate > 91){colorCard = "bg-violet-800";}
 
     return (
         <Card className={cn(`w-[280px] align-middle justify-center items-center flex hover:drop-shadow transition-shadow ${colorCard} text-white`,)}>
