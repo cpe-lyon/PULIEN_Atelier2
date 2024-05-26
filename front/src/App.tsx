@@ -13,6 +13,7 @@ import { useAtom } from "jotai";
 import {userCash, username} from "@/context/jotai.ts";
 import {useEffect} from "react";
 import UserService from "@/services/UserService.ts";
+import Navbar from './components/Navbar.tsx';
 
 
 function App() {
@@ -40,6 +41,9 @@ function App() {
 
   return (
     <Router>
+       {localStorage.getItem('auth') ?  
+       <Navbar username={usernameFromContext} cash={usercashFromContext}/> 
+       : <></>}
       <Routes>
         <Route path="/authentified" element={<AlreadyConnected />} />
         <Route path="/login" element={<Login />} />

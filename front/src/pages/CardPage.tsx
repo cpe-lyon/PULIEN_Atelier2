@@ -8,8 +8,10 @@ import Navbar from "@/components/Navbar.tsx";
 import '../styles/cardPage.css';
 import {CardInstance} from "@/models/CardInstance";
 import TableV2 from "@/components/TableV2.tsx";
+import LoadingSpinner from "@/components/LoadingSpinner.tsx";
 
 const CardPage = () => {
+    const [isLoading,setIsLoading]=useState<boolean>(true)
     const [cards, setCards] = useState<CardInstance[]>([{}]);
     const [cardToDisplay, setCardToDisplay] = useState<Card>({});
     const [usernameFromContext, setUsername] = useAtom(username);
@@ -25,14 +27,17 @@ const CardPage = () => {
             setCards(data);
         }
 
-        getAllCards();
+        getAllCards().then(()=>
+        setIsLoading(false));
     }, []);
 
     return(
         <>
-            <Navbar username={usernameFromContext} cash={usercashFromContext}/>
-            <div className=" w-screen bg-slate-700 grid grid-cols-3 gap-4 card-page-container">
-                <div className="table-inventory-container">
+    <div className="w-full h-screen overflow-auto bg-slate-700 grid grid-cols-3 gap-4 card-page-container">
+                {isLoading && <div className="w-screen h-screen flex self-center justify-center"><LoadingSpinner /> </div>}
+            {!isLoading &&
+            <>
+            <div className="table-inventory-container">
                     <TableV2 cards={cards} setCardDetails={setCardToDisplay}/>
                 </div>
                 <div className="card-details-container col-span-1 bg-blue-500 h-full px-2 align-center flex justify-center items-center">
@@ -53,6 +58,8 @@ const CardPage = () => {
                         <p className="more-details">Click on a row to get more details on your card</p>
                     }
                 </div>
+                </>
+                }
             </div>
         </>
     )

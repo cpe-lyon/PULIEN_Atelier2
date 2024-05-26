@@ -28,6 +28,7 @@ const authProvider = {
             })
             .then(token => {
                 localStorage.setItem('auth', token);
+                
             })
             .catch(() => {
                 throw new Error('Network error')

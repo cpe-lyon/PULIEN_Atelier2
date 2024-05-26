@@ -7,6 +7,8 @@ import MarketPlaceAlert from "@/components/MarketPlaceAlert";
 import CardInstanceContainer from "@/components/CardInstanceContainer";
 import {useAtom} from "jotai";
 import {userCash, username} from "@/context/jotai.ts";
+import { CardInstance } from "@/models/CardInstance";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const Marketplace = () => {
     const [usernameFromContext, setUsername] = useAtom(username);
@@ -37,12 +39,14 @@ const Marketplace = () => {
         try{
             await MarketService.buyCardInstanceBuyable(id);
             success = true;
+            let solde = await UserService.getUserCash();
+            setUsercash(solde);
         }catch (e) {
             success = false;
         }
         console.log('achat de carte avec id', id);
 
-        const cardInstance = cardInstanceBuyable.find(i => i.id === id);
+        const cardInstance : CardInstance | undefined = cardInstanceBuyable.find(i => i.id === id);
 
         let alertProps = {
             display: true,
@@ -62,11 +66,12 @@ const Marketplace = () => {
         const data = await getCardInstanceBuyable();
         setCardInstanceBuyable(data);
     };
+    const [isLoading,setIsLoading]=useState<boolean>(true)
 
     const dialogToBuy = async (id) => {
         const cardInstance = cardInstanceBuyable.find(i => i.id === id);
         if (!cardInstance) return;
-
+        
         const price = cardInstance.card.price;
         const solde = await UserService.getUserCash();
         const total = solde - price;
@@ -86,16 +91,18 @@ const Marketplace = () => {
             setCardInstanceBuyable(data);
 
         };
-        getData();
+        getData().then(()=>
+            setIsLoading(false));
     }, []);
 
     return (
+
         <>
-            <Navbar username={usernameFromContext} cash={usercashFromContext}/>
-            <MarketPlaceAlert alertProps={alertProps}></MarketPlaceAlert>
+            {isLoading && <div className="w-screen h-screen flex self-center justify-center"><LoadingSpinner /> </div>}
+            {!isLoading && <> <MarketPlaceAlert alertProps={alertProps}></MarketPlaceAlert>
             <CardInstanceContainer cardInstanceBuyable={cardInstanceBuyable} dialogToBuy={dialogToBuy} />
             <ModalDialog displayDialog={displayDialog} setDisplayDialog={setDisplayDialog} buyCardInstanceBuyable={buyCardInstanceBuyable} />
-        </>
+            </>}</>
     );
 };
 
