@@ -1,14 +1,12 @@
 package org.pulien.cardmanager.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "card_instances", schema = "pulien")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -26,5 +24,5 @@ public class CardInstance {
     private Card card;
 
     @Column(name = "is_buyable")
-    private boolean isBuyable;
+    private Boolean isBuyable;
 }

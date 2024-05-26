@@ -117,7 +117,7 @@ const Register = () => {
                         <FormItem>
                             <FormLabel>Mot de passe</FormLabel>
                             <FormControl>
-                                <Input placeholder="Mot de passe" {...field} />
+                                <Input placeholder="Mot de passe" {...field} type={"password"}/>
                             </FormControl>
                             <FormMessage/>
                         </FormItem>

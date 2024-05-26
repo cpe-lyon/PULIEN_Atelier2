@@ -1,30 +1,8 @@
-# PULIEN_Atelier2
-Atelier n°2 du module de WebDynamique - Microservices
+### PULIEN_Atelier2
 
-## Contributeurs :
-* Théo CLERE
-* Maxime BROSSARD
-* Sandro SPINA
-* Ceif-Edine MAROUANI
-* Julien BUC
+# Atelier n°2 du module de WebDynamique - Microservices
 
-## Travail réalisé
-
-* Réalisation d'un serveur spring 
-  * Authentification sommaire s'appuyant tout de même sur des tokens JWT
-  * Plusieurs ressources accessible : Users, Card, CardInstances
-  * Fonctionnalités: 
-    * Création d’utilisateur et connexion
-    * Achat/vente de cartes sur la plateforme
-
-* Réalisation d'un front en React 
-  * Ui de login/register
-  * NavBar 
-  * Page Market Place
-  * Page Vitrine
-  * Page d'inventaire des carte posseder par l'utilisateur connecté
-
- ## Introduction
+## Introduction
 
 Ce document décrit le fonctionnement et la structure d'une application web pour une plateforme d'achat et de vente de cartes. L'application permet aux utilisateurs de s'inscrire, de recevoir aléatoirement des cartes de jeu, de se connecter, et d'acheter ou de vendre des cartes. Elle est développée avec une architecture Web Javascript et des Web Services Full REST, en utilisant Spring Boot pour le backend et React.js pour le frontend.
 
@@ -102,3 +80,27 @@ Ensuite il faut aller sur intellij et lancer la fonction ```cardmanagerapplicati
     - Base de données SQL : Utilisée pour la persistance des données utilisateur et carte.
     - Node.js : Pour exécuter le serveur de développement React.
     - Serveur Web : Pour déployer et exécuter l'application.
+
+
+## Contributeurs :
+* Théo CLERE
+* Maxime BROSSARD
+* Sandro SPINA
+* Ceif-Edine MAROUANI
+* Julien BUC
+
+## Travail réalisé
+
+* Réalisation d'un serveur spring 
+  * Authentification sommaire s'appuyant tout de même sur des tokens JWT
+  * Plusieurs ressources accessible : Users, Card, CardInstances
+  * Fonctionnalités: 
+    * Création d’utilisateur et connexion
+    * Achat/vente de cartes sur la plateforme
+
+* Réalisation d'un front en React 
+  * Ui de login/register
+  * NavBar 
+  * Page Market Place
+  * Page Vitrine
+  * Page d'inventaire des carte posseder par l'utilisateur connecté 

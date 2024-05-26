@@ -11,3 +11,9 @@
 .navLinkHover:hover{
     text-decoration: underline;
 }
+
+body {
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+}

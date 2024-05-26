@@ -19,3 +19,4 @@ public class CardManagerApplication {
 		return new JwtUtil();
 	}
 }
+

@@ -48,7 +48,7 @@ public class MarketPlaceImpl implements MarketPlaceService {
             throw new BadRequestException("You cannot buy your own card!");
         }
 
-        if (!cardInstance1.isBuyable()) {
+        if (!cardInstance1.getIsBuyable()) {
             return Optional.empty();
         }
 
@@ -69,7 +69,7 @@ public class MarketPlaceImpl implements MarketPlaceService {
 
         // Cards is now owned by buyer and the instance is not buyable anymore X
         cardInstance1.setUser(savedUser);
-        cardInstance1.setBuyable(false);
+        cardInstance1.setIsBuyable(Boolean.FALSE);
         cardsInstanceService.updateCardInstance(cardInstance1.getId(), cardInstance1);
 
         return Optional.of(cardInstance1);
@@ -95,7 +95,7 @@ public class MarketPlaceImpl implements MarketPlaceService {
             throw new AuthorizationException("Not allowed to sell this card!!!");
         }
 
-        cardInstance1.setBuyable(true);
+        cardInstance1.setIsBuyable(true);
 
         return Optional.of(cardInstancesRepository.save(cardInstance1));
     }

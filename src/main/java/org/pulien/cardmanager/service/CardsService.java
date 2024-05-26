@@ -9,16 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @NoArgsConstructor
 public class CardsService {
+    private final Random random = new Random();
+
     @Autowired
     private CardsRepository cardsRepository;
 
@@ -28,6 +27,10 @@ public class CardsService {
 
     public List<Card> getAllCards() {
         return cardsRepository.findAll();
+    }
+
+    public Optional<List<Card>> getAllByRatingRank(int min, int max) {
+        return cardsRepository.findAllByRatingBetween(min, max);
     }
 
     public ResponseEntity<Card> getCardById(@NonNull @PathVariable Long id) {
@@ -62,35 +65,42 @@ public class CardsService {
         return filteredCards.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    /*public ResponseEntity<Card> updateCardFromId(@RequestBody CardDTO newValue) {
-        Card card = newValue.toEntity();
-        AtomicReference<Card> result = new AtomicReference<>(new Card());
+    /**
+     * get random card pondéré par sa rareté
+     * @return Card
+     * @throws BadRequestException
+     */
+    public Card getRandomCard() throws BadRequestException {
+        List<List<Card>> allTiers = new ArrayList<>();
 
-        this.cardsRepository.findById(newValue.getId())
-                .ifPresent(card1 -> {
-                    card.setCardId(card1.getCardId());
-                    result.set(this.cardsRepository.save(card));
-                });
+        List<Card> allCardsTier1 = getAllByRatingRank(0, 85)
+                .orElseThrow(() -> new BadRequestException("There is no card."));
 
-        if (result.get() != null) {
-            return ResponseEntity.ok(result.get());
+        List<Card> allCardsTier2 = getAllByRatingRank(86, 90).orElse(Collections.emptyList());
+        List<Card> allCardsTier3 = getAllByRatingRank(91, 99).orElse(Collections.emptyList());
+
+        allTiers.add(allCardsTier1);
+        if (!allCardsTier2.isEmpty()) allTiers.add(allCardsTier2);
+        if (!allCardsTier3.isEmpty()) allTiers.add(allCardsTier3);
+
+        int tierDrew = random.nextInt(10);
+        List<Card> tier;
+
+        if (tierDrew < 6) {
+            tier = allTiers.get(0);
+        } else if (tierDrew < 9 && allTiers.size() > 1) {
+            tier = allTiers.get(1);
+        } else if (allTiers.size() > 2) {
+            tier = allTiers.get(2);
+        } else {
+            tier = allTiers.get(0);
         }
 
-        return ResponseEntity.notFound().build();
-    }
-
-    public ResponseEntity<Card> insertCard(@RequestBody CardDTO newValue) {
-        Optional<Card> saved = Optional.of(this.cardsRepository.save(newValue.toEntity()));
-        return saved.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
-    }*/
-
-    public Card getRandomCard() throws BadRequestException {
-        List<Card> allCards = getAllCards();
-        if (allCards.isEmpty()){
+        if (tier.isEmpty()) {
             throw new BadRequestException("There is no card.");
         }
-        int idx = new Random().nextInt(allCards.size());
-        return allCards.get(idx);
+
+        return tier.get(random.nextInt(tier.size()));
     }
 
     public void register(Card card) {

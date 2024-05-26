@@ -1,0 +1,21 @@
+* {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.table-inventory-container {
+    background-image: url(src/assets/juveFinoAllaFine.jpg);
+    grid-column: span 2 / span 2;
+    height: 100%;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.card-details-container {
+    background-image: url(src/assets/changingRoom.jpg);
+}
+
+.card-page-container {
+    height: 92vh;
+}

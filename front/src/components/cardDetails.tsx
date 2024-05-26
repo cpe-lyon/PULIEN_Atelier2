@@ -29,13 +29,14 @@ import {Button} from "react-bootstrap";
         rate:number,
         proprio:string,
         id: number,
+        cardInstanceId: number,
         buyable: boolean,
         onClickOnBuy: (id: number) => void;
     }
 
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const CardDetails = ({country,nameCard,height,weight,pace,rate,proprio, cardInstanceId , buyable, onClickOnBuy}:CardProperties) => {
+const CardDetails = ({country,nameCard,height,weight,pace,rate,proprio, buyable, onClickOnBuy, cardInstanceId} :  CardProperties) => {
     let colorCard;
     if(rate <= 89){colorCard = "bg-stone-500";}
     else if(rate <= 91){colorCard = "bg-amber-500";}

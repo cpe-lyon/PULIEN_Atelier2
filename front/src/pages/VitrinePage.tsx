@@ -1,34 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {useEffect, useState} from "react";
 import Navbar from "@/components/Navbar";
 import CardContainer from "@/components/CardContainer";
-import MarketService from "@/services/MarketService";
-import UserService from "@/services/UserService";
-import MarketPlaceAlert from "@/components/MarketPlaceAlert";
-import CardService from "@/services/CardService";
+import {useAtom} from "jotai";
+import {userCash, username} from "@/context/jotai.ts";
+import CardService from "@/services/CardService.ts";
+import UserService from "@/services/UserService.ts";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const Vitrine = () => {
-    const navigate = useNavigate();
     const [cards, setCards] = useState([]);
-    const [username, setUsername] = useState('');
-    const [usercash, setUserCash] = useState(0);
+    const [usernameFromContext, setUsername] = useAtom(username);
+    const [usercashFromContext, setUsercash] = useAtom(userCash);
+    const [isLoading,setIsLoading]=useState<boolean>(true)
 
     useEffect(() => {
         const getData = async () => {
             const data = await CardService.getAll();
             setCards(data)
-
-            const userData = await UserService.getUser();
-            setUsername(userData.login)
-            setUserCash(userData.cash)
         };
-        getData();
+        getData().then(()=>
+            setIsLoading(false));
     }, []);
 
     return (
         <>
-            <Navbar username={username} cash={usercash}/>
-            <CardContainer cards={cards}/>
+                    {isLoading && <div className="w-screen h-screen flex self-center justify-center"><LoadingSpinner /> </div>}
+
+                    {!isLoading && <>  
+                     <CardContainer cards={cards}/> 
+                     </>}
         </>
     );
 };
